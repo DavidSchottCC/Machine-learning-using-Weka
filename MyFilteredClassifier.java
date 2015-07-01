@@ -91,6 +91,7 @@ public class MyFilteredClassifier {
 		fvNominalVal.addElement("ham");
 		Attribute attribute1 = new Attribute("class", fvNominalVal); // @attribute spamclass {spam,ham}
 		Attribute attribute2 = new Attribute("text", (FastVector<String>) null); // @attribute text String
+																		
 		// Create list of instances with capacity 1
 		FastVector<Attribute> fvWekaAttributes = new FastVector<Attribute>(2);
 		fvWekaAttributes.addElement(attribute1);
@@ -102,8 +103,7 @@ public class MyFilteredClassifier {
 		DenseInstance instance = new DenseInstance(2);
 		instance.setValue((Attribute) fvWekaAttributes.elementAt(1), text);
 		instances.add(instance);
-		System.out
-				.println("===== Instance created with reference dataset =====");
+		System.out.println("===== Instance created with reference dataset =====");
 		System.out.println(instances);
 	}
 
@@ -133,7 +133,7 @@ public class MyFilteredClassifier {
 	 *            Command-line arguments: fileData and fileModel.
 	 */
 	public static void main(String[] args) {
-		String dirPath = "C:\\Users\\DavidCC\\Desktop\\Weka Beispiel\\tmweka\\FilteredClassifier\\";
+		String dirPath = "Users/user1/Documents/learner/";
 		MyFilteredClassifier classifier;
 		classifier = new MyFilteredClassifier();
 		classifier.loadData(dirPath + "smstest.txt");

@@ -61,6 +61,25 @@ public class MyFilteredLearner {
 	}
 
 	/**
+	 * This method sets the pre-processing filters to use for preparing the
+	 * dataset.
+	 */
+	public void preProcess() {
+		try {
+			filter = new StringToWordVector();
+			filter.setInputFormat(trainData);
+			filter.setAttributeIndices("last");
+			//filter.setOutputWordCounts(true);
+			// filter.setUseStoplist(true);
+			// filter.setIDFTransform(true);
+			System.out.println("===== Filter of (training) dataset set =====");
+		} catch (Exception e) {
+			System.out.println("Problem found when pre-processing data "
+					+ e.getMessage());
+		}
+	}
+
+	/**
 	 * This method evaluates the classifier. As recommended by WEKA
 	 * documentation, the classifier is defined but not trained yet. Evaluation
 	 * of previously trained classifiers can lead to unexpected results.
@@ -77,8 +96,8 @@ public class MyFilteredLearner {
 			eval.crossValidateModel(classifier, trainData, 10, new Random(1));
 			System.out.println(eval.toSummaryString());
 			System.out.println(eval.toClassDetailsString());
-			System.out
-					.println("===== Evaluating on filtered (training) dataset done =====");
+			System.out.println(eval.toMatrixString());
+			System.out.println("===== Evaluating on filtered (training) dataset done =====");
 		} catch (Exception e) {
 			System.out.println("Problem found when evaluating:\t"
 					+ e.getMessage());
@@ -96,8 +115,7 @@ public class MyFilteredLearner {
 			classifier.setClassifier(new NaiveBayes());
 			classifier.buildClassifier(trainData);
 			// System.out.println(classifier);
-			System.out
-					.println("===== Training on filtered (training) dataset done =====");
+			System.out.println("===== Training on filtered (training) dataset done =====");
 		} catch (Exception e) {
 			System.out.println("Problem found when training:\t"
 					+ e.getMessage());
@@ -124,24 +142,6 @@ public class MyFilteredLearner {
 	}
 
 	/**
-	 * This method sets the pre-processing filters to use for preparing the
-	 * dataset dataset.
-	 */
-	public void preProcess() {
-		try {
-			filter = new StringToWordVector();
-			filter.setInputFormat(trainData);
-			filter.setAttributeIndices("last");
-			// filter.setUseStoplist(true);
-			// filter.setIDFTransform(true);
-			System.out.println("===== Filter of (training) dataset set =====");
-		} catch (Exception e) {
-			System.out.println("Problem found when pre-processing data "
-					+ e.getMessage());
-		}
-	}
-
-	/**
 	 * Applies the preprocessing filters to the dataset and writes an ARFF-file
 	 * to a given path.
 	 * 
@@ -157,8 +157,7 @@ public class MyFilteredLearner {
 				saver.setInstances(trainDataFiltered);
 				saver.setFile(new File(savePath));
 				saver.writeBatch();
-				System.out
-						.println("===== Saved filtered (training) dataset to: "
+				System.out.println("===== Saved filtered (training) dataset to: "
 								+ savePath + " =====");
 			}
 		} catch (Exception e) {
